@@ -34,3 +34,7 @@ def plot_piechart(df): # input is categorical dataframe
             ite +=1
     # Show the figure
     plt.show()
+
+
+# Plot a heatmap to show the correlation
+
