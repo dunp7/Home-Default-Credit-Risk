@@ -31,8 +31,10 @@ class Univariate_Analysis:
             ax1.set_yticklabels([])
             ax1.set_ylabel(self.col, size = 15, weight = 'bold')
             sns.boxplot(data= self.df, ax = ax2)
-            ax2.spines[['left','right','top','bottom']].set_visible(False)
-            ax2.set_yticklabels([])
+            ax2.tick_params(axis='y', labelright=True, labelleft=False)
+            ax2.tick_params(right = False)
+            ax2.spines[['left','top','bottom']].set_visible(False)
+            ax2.spines['right'].set_color('grey')
         else:
             '''For categorical data'''
             data = self.df.value_counts()
