@@ -20,14 +20,14 @@ class Univariate_Analysis:
         self.df = df[col]
         self.col = col
         self.num = num
-    def visualize(self, figsize = (20,8), bins = 100):
-        fig,(ax1,ax2) = plt.subplots(1,2,figsize = figsize)
+    def visualize(self, bins = 100):
+        fig,(ax1,ax2) = plt.subplots(1,2,figsize = (20,8))
         if self.num == True:
             '''For numeric data'''
             sns.histplot(self.df, bins= bins, kde=True, ax = ax1)
             ax1.spines[['left','right','top']].set_visible(False)
             ax1.spines['bottom'].set_color('grey')
-            ax1.tick_params(left = False)
+            ax1.tick_params(left = False, bottom = False)
             ax1.set_yticklabels([])
             ax1.set_ylabel(self.col, size = 15, weight = 'bold')
             sns.boxplot(data= self.df, ax = ax2)
@@ -35,11 +35,12 @@ class Univariate_Analysis:
             ax2.set_yticklabels([])
         else:
             '''For categorical data'''
-            ax1.pie(self.df, labels=self.df.index.to_list(), autopct='%1.1f%%', startangle=90, colors=sns.color_palette('pastel'))
+            data = self.df.value_counts()
+            ax1.pie(data, labels=data.index.to_list(), autopct='%1.1f%%', startangle=90, colors=sns.color_palette('pastel'))
             ax1.set_ylabel(self.col, size = 15, weight = 'bold')
 
-            if len(self.df) <= 5:
-                ax2.bar(self.df.index.astype(str), self.df.values, color=sns.color_palette('pastel'))
+            if data.shape[0] <= 2:
+                ax2.bar(data.index.astype(str), data.values, color=sns.color_palette('pastel'))
                 for p in ax2.patches:
                     x,y = p.get_xy()
                     width = p.get_width()
@@ -49,7 +50,7 @@ class Univariate_Analysis:
                 ax2.spines['bottom'].set_color('grey')
                 ax2.set_yticklabels([])
             else:
-                ax2.barh(self.df.index.astype(str), self.df.values, color=sns.color_palette('pastel'))
+                ax2.barh(data.index.astype(str), data.values, color=sns.color_palette('pastel'))
                 for p in ax2.patches:
                     x, y = p.get_xy()
                     width = p.get_width()
@@ -58,14 +59,17 @@ class Univariate_Analysis:
                 
                 ax2.spines[['bottom','right','top']].set_visible(False)
                 ax2.spines['left'].set_color('grey')
-                ax2.set_yticklabels([])
                 ax2.set_xticklabels([])
 
             ax2.tick_params(left = False,bottom = False)
 
 class Bivariate_Analysis:
-    ''' A class of plotting to gain insight'''
-    def __init__(self,df):
-        '''Input is df with 2 columns'''
-        self.df = df
+    ''' A class of plotting to gain insight with Target value'''
+    def __init__(self,df,col1, num = True):
+        '''Input is df with 2 columns
+        num: FLag if col1 is numeric'''
+        self.df = df[[col1,'TARGET']]
+        self.col1 = col1
+        self.col2 = 'TARGET'
+        self.num = num
     
