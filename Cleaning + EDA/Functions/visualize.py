@@ -68,10 +68,77 @@ class Univariate_Analysis:
 class Bivariate_Analysis:
     ''' A class of plotting to gain insight with Target value'''
     def __init__(self,df,col1, num = True):
-        '''Input is df with 2 columns
+        '''Input is df that contains TARGET columns
+        col1 : columns you want to analyze
         num: FLag if col1 is numeric'''
         self.df = df[[col1,'TARGET']]
         self.col1 = col1
         self.col2 = 'TARGET'
         self.num = num
+    # NUMERIC COLUMNS
+    def plothistogram(self, bins = 100):
+        if self.num == True:
+            fig,(ax1,ax2) = plt.subplots(1,2,figsize = (15,7))
+            sns.histplot(self.df[self.df['TARGET'] == 0], bins= bins, kde=True, ax = ax1)
+            ax1.spines[['left','right','top']].set_visible(False)
+            ax1.spines['bottom'].set_color('grey')
+            ax1.tick_params(left = False, bottom = False)
+            ax1.set_yticklabels([])
+            ax1.set_ylabel(self.col1, size = 15, weight = 'bold')
+            ax1.set_title('NON_DEFAULT')
+
+            sns.histplot(self.df[self.df['TARGET'] == 1], bins= bins, kde=True, ax = ax2)
+            ax2.spines[['left','right','top']].set_visible(False)
+            ax2.spines['bottom'].set_color('grey')
+            ax2.tick_params(left = False, bottom = False)
+            ax2.set_yticklabels([])
+            ax2.set_ylabel('')
+            ax2.set_title('DEFAULT')
+        else:
+            return 'Your input is not numeric'
+        
+        
+    # CATEGORICAL COLUMNS
+    def countplot(self):
+        '''Count Plot for Categorical only'''
+        if self.num == True:
+            return 'Your input is not categorical'
+        else:
+            fig,ax = plt.subplots(1,2,figsize = (15,7))
+            if self.df[self.col1].nunique() <= 4:
+                sns.countplot(data = self.df[self.df['TARGET'] == 0], x = self.col1,dodge=True,ax = ax[0], palette='Set1')
+                ax[0].spines[['left','right','top']].set_visible(False)
+                ax[0].spines['bottom'].set_color('grey')
+                ax[0].set_yticklabels([])
+                ax[0].tick_params(left = False, bottom = False)
+                ax[0].set_title('Target= 0')
+                ax[0].set_xlabel('')
+                ax[0].set_ylabel(self.col1, size = 15, weight = 'bold')
+                sns.countplot(data = self.df[self.df['TARGET'] == 1], x = self.col1,dodge=True,ax = ax[1], palette='Set1')
+                ax[1].spines[['left','right','top']].set_visible(False)
+                ax[1].spines['bottom'].set_color('grey')
+                ax[1].set_yticklabels([])
+                ax[1].tick_params(left = False, bottom = False)
+                ax[1].set_title('Target= 1')
+                ax[1].set_xlabel('')
+                ax[1].set_ylabel('')
+            else: 
+                sns.countplot(data=self.df[self.df['TARGET'] == 0], y=self.col1, dodge=True, ax=ax[0], palette='Set1')
+                ax[0].spines[['top', 'bottom', 'right']].set_visible(False)
+                ax[0].spines['left'].set_color('grey')
+                ax[0].set_xticklabels([])
+                ax[0].tick_params(left=False, bottom=False)
+                ax[0].set_title('Target = 0')
+                ax[0].set_ylabel(self.col1, size=15, weight='bold')
+                ax[0].set_xlabel('')
+
+                # Horizontal bar plot for Target=1
+                sns.countplot(data=self.df[self.df['TARGET'] == 1], y=self.col1, dodge=True, ax=ax[1], palette='Set1')
+                ax[1].spines[['top', 'bottom', 'right']].set_visible(False)
+                ax[1].spines['left'].set_color('grey')
+                ax[1].set_xticklabels([])
+                ax[1].tick_params(left=False, bottom=False)
+                ax[1].set_title('Target = 1')
+                ax[1].set_ylabel('')
+                ax[1].set_xlabel('')
     
