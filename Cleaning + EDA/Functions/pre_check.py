@@ -13,13 +13,11 @@ class pre_check_tool:
     def split_data(self):
         '''Func: split data into cate and num data'''
         self.numdf = self.df._get_numeric_data()
-        col = []
         for i in self.numdf.columns:
             if self.numdf[i].nunique() <= 3:
-                col.append(i)
                 self.numdf = self.numdf.drop(columns = i)
 
-        self.catdf = self.df[[col for col in self.df if col not in self.df.columns]]
+        self.catdf = self.df[[col for col in self.df if col not in self.numdf.columns]]
         
 
     # Check null
