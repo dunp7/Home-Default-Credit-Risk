@@ -27,7 +27,7 @@ class pre_check_tool:
         percent_missing = self.df.isnull().sum() * 100 / len(self.df)
         missing_value_df = pd.DataFrame({'number_missing' : number_missing,
                                         'percent_missing': percent_missing})
-        return missing_value_df
+        return missing_value_df.sort_values(by= 'percent_missing', ascending= False)
 
 
     def find_null_cols(self,threshhold):
@@ -67,10 +67,13 @@ class pre_check_tool:
         '''Drawl all the pie chart of the categorical columns'''
         if not self.catdf.empty: 
             col= self.catdf.columns
-            fig, ax = plt.subplots(round(len(col)/4),4,figsize=(20,10))
+            a = 1
+            if len(col) >= 4: 
+                a = round(len(col)/4)
+            fig, ax = plt.subplots(a,4,figsize=(20,10))
             ite = 0 
             for i in range(0,round(len(col)/4)):
-                for j in range(0,4):
+                for j in range(0,4): 
                     sizes = self.catdf[col[ite]].value_counts(normalize=True)
                     ax[i][j].pie(sizes, autopct='%1.1f%%')
                     ax[i][j].set_title(col[ite], color = 'red')

@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 
+pallete = '#f4dce4'
 
 def draw_corr(df):
     '''Draw a correlation in dataframe
@@ -22,8 +23,12 @@ class Univariate_Analysis:
         self.num = num
     def visualize(self, bins = 100):
         fig,(ax1,ax2) = plt.subplots(1,2,figsize = (20,8))
+        fig.set_facecolor(pallete)
+        ax1.set_facecolor(pallete)
+        ax2.set_facecolor(pallete)
         if self.num == True:
             '''For numeric data'''
+            
             sns.histplot(self.df, bins= bins, kde=True, ax = ax1)
             ax1.spines[['left','right','top']].set_visible(False)
             ax1.spines['bottom'].set_color('grey')
@@ -32,9 +37,10 @@ class Univariate_Analysis:
             ax1.set_ylabel(self.col, size = 15, weight = 'bold')
             sns.boxplot(data= self.df, ax = ax2)
             ax2.tick_params(axis='y', labelright=True, labelleft=False)
-            ax2.tick_params(right = False)
+            ax2.tick_params(right = False,left= False)
             ax2.spines[['left','top','bottom']].set_visible(False)
             ax2.spines['right'].set_color('grey')
+            ax2.set_ylabel('')
         else:
             '''For categorical data'''
             data = self.df.value_counts()
@@ -79,7 +85,10 @@ class Bivariate_Analysis:
     def plothistogram(self, bins = 100):
         if self.num == True:
             fig,(ax1,ax2) = plt.subplots(1,2,figsize = (15,7))
-            sns.histplot(self.df[self.df['TARGET'] == 0], bins= bins, kde=True, ax = ax1)
+            fig.set_facecolor(pallete)
+            ax1.set_facecolor(pallete)
+            ax2.set_facecolor(pallete)
+            sns.histplot(self.df[self.df['TARGET'] == 0][self.col1], bins= bins, kde=True, ax = ax1)
             ax1.spines[['left','right','top']].set_visible(False)
             ax1.spines['bottom'].set_color('grey')
             ax1.tick_params(left = False, bottom = False)
@@ -87,7 +96,7 @@ class Bivariate_Analysis:
             ax1.set_ylabel(self.col1, size = 15, weight = 'bold')
             ax1.set_title('NON_DEFAULT')
 
-            sns.histplot(self.df[self.df['TARGET'] == 1], bins= bins, kde=True, ax = ax2)
+            sns.histplot(self.df[self.df['TARGET'] == 1][self.col1], bins= bins, kde=True, ax = ax2)
             ax2.spines[['left','right','top']].set_visible(False)
             ax2.spines['bottom'].set_color('grey')
             ax2.tick_params(left = False, bottom = False)
@@ -105,8 +114,12 @@ class Bivariate_Analysis:
             return 'Your input is not categorical'
         else:
             fig,ax = plt.subplots(1,2,figsize = (15,7))
-            if self.df[self.col1].nunique() <= 4:
-                sns.countplot(data = self.df[self.df['TARGET'] == 0], x = self.col1,dodge=True,ax = ax[0], palette='Set1')
+            fig.set_facecolor(pallete)
+            ax[0].set_facecolor(pallete)
+            ax[1].set_facecolor(pallete)
+            order = self.df[self.col1].value_counts().index
+            if self.df[self.col1].nunique() < 4:
+                sns.countplot(data = self.df[self.df['TARGET'] == 0], x = self.col1,dodge=True,ax = ax[0], palette='pastel',order=order)
                 ax[0].spines[['left','right','top']].set_visible(False)
                 ax[0].spines['bottom'].set_color('grey')
                 ax[0].set_yticklabels([])
@@ -114,7 +127,7 @@ class Bivariate_Analysis:
                 ax[0].set_title('Target= 0')
                 ax[0].set_xlabel('')
                 ax[0].set_ylabel(self.col1, size = 15, weight = 'bold')
-                sns.countplot(data = self.df[self.df['TARGET'] == 1], x = self.col1,dodge=True,ax = ax[1], palette='Set1')
+                sns.countplot(data = self.df[self.df['TARGET'] == 1], x = self.col1,dodge=True,ax = ax[1], palette='pastel',order=order)
                 ax[1].spines[['left','right','top']].set_visible(False)
                 ax[1].spines['bottom'].set_color('grey')
                 ax[1].set_yticklabels([])
@@ -123,7 +136,7 @@ class Bivariate_Analysis:
                 ax[1].set_xlabel('')
                 ax[1].set_ylabel('')
             else: 
-                sns.countplot(data=self.df[self.df['TARGET'] == 0], y=self.col1, dodge=True, ax=ax[0], palette='Set1')
+                sns.countplot(data=self.df[self.df['TARGET'] == 0], y=self.col1, dodge=True, ax=ax[0], palette='pastel',order=order)
                 ax[0].spines[['top', 'bottom', 'right']].set_visible(False)
                 ax[0].spines['left'].set_color('grey')
                 ax[0].set_xticklabels([])
@@ -133,7 +146,7 @@ class Bivariate_Analysis:
                 ax[0].set_xlabel('')
 
                 # Horizontal bar plot for Target=1
-                sns.countplot(data=self.df[self.df['TARGET'] == 1], y=self.col1, dodge=True, ax=ax[1], palette='Set1')
+                sns.countplot(data=self.df[self.df['TARGET'] == 1], y=self.col1, dodge=True, ax=ax[1], palette='pastel',order=order)
                 ax[1].spines[['top', 'bottom', 'right']].set_visible(False)
                 ax[1].spines['left'].set_color('grey')
                 ax[1].set_xticklabels([])
