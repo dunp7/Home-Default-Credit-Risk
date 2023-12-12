@@ -9,18 +9,15 @@ palette = '#f4dce4'
 def draw_corr(df):
     '''Draw a correlation in dataframe
     Input: numeric data'''
-    if df.shape[1] >= 10:
-        correlation_matrix = df.corr()
-        fig,ax = plt.subplots(figsize=(10, 7))
-        fig.set_facecolor(palette)
-        ax.set_facecolor(palette)
-        sns.heatmap(correlation_matrix, annot=True, cmap='twilight', fmt='.2f', 
-                    mask = np.triu(np.ones_like(correlation_matrix,dtype=bool))
-                    ,linewidths=0.5,ax= ax)
-        ax.set_title('Correlation Matrix', weight= 'bold', size = 15)
-        ax.tick_params(left = False,  bottom = False)
-    else:
-        pass
+    correlation_matrix = df.corr()
+    fig,ax = plt.subplots(figsize=(10, 7))
+    fig.set_facecolor(palette)
+    ax.set_facecolor(palette)
+    sns.heatmap(correlation_matrix, annot=True, cmap='twilight', fmt='.2f', 
+                mask = np.triu(np.ones_like(correlation_matrix,dtype=bool))
+                ,linewidths=0.5,ax= ax)
+    ax.set_title('Correlation Matrix', weight= 'bold', size = 15)
+    ax.tick_params(left = False,  bottom = False)
 
 class Univariate_Analysis:
     '''This is a class for a dataframe with only one columns'''
