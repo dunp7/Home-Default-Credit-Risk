@@ -2,17 +2,25 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+import numpy as np
 
-pallete = '#f4dce4'
+palette = '#f4dce4'
 
 def draw_corr(df):
     '''Draw a correlation in dataframe
     Input: numeric data'''
-    correlation_matrix = df.corr()
-    plt.figure(figsize=(14, 7))
-    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5)
-    plt.title('Correlation Matrix')
-    plt.show()
+    if df.shape[1] >= 10:
+        correlation_matrix = df.corr()
+        fig,ax = plt.subplots(figsize=(10, 7))
+        fig.set_facecolor(palette)
+        ax.set_facecolor(palette)
+        sns.heatmap(correlation_matrix, annot=True, cmap='twilight', fmt='.2f', 
+                    mask = np.triu(np.ones_like(correlation_matrix,dtype=bool))
+                    ,linewidths=0.5,ax= ax)
+        ax.set_title('Correlation Matrix', weight= 'bold', size = 15)
+        ax.tick_params(left = False,  bottom = False)
+    else:
+        pass
 
 class Univariate_Analysis:
     '''This is a class for a dataframe with only one columns'''
@@ -23,9 +31,9 @@ class Univariate_Analysis:
         self.num = num
     def visualize(self, bins = 100):
         fig,(ax1,ax2) = plt.subplots(1,2,figsize = (20,8))
-        fig.set_facecolor(pallete)
-        ax1.set_facecolor(pallete)
-        ax2.set_facecolor(pallete)
+        fig.set_facecolor(palette)
+        ax1.set_facecolor(palette)
+        ax2.set_facecolor(palette)
         if self.num == True:
             '''For numeric data'''
             
@@ -73,21 +81,22 @@ class Univariate_Analysis:
 
 class Bivariate_Analysis:
     ''' A class of plotting to gain insight with Target value'''
-    def __init__(self,df,col1, num = True):
+    def __init__(self,df,col1,col2 = 'TARGET' ,num = True):
         '''Input is df that contains TARGET columns
         col1 : columns you want to analyze
+        col2 : always is categorical, default is TARGET
         num: FLag if col1 is numeric'''
-        self.df = df[[col1,'TARGET']]
+        self.df = df[[col1,col2]]
         self.col1 = col1
-        self.col2 = 'TARGET'
+        self.col2 = col2
         self.num = num
     # NUMERIC COLUMNS
     def plothistogram(self, bins = 100):
         if self.num == True:
             fig,(ax1,ax2) = plt.subplots(1,2,figsize = (15,7))
-            fig.set_facecolor(pallete)
-            ax1.set_facecolor(pallete)
-            ax2.set_facecolor(pallete)
+            fig.set_facecolor(palette)
+            ax1.set_facecolor(palette)
+            ax2.set_facecolor(palette)
             sns.histplot(self.df[self.df['TARGET'] == 0][self.col1], bins= bins, kde=True, ax = ax1)
             ax1.spines[['left','right','top']].set_visible(False)
             ax1.spines['bottom'].set_color('grey')
@@ -114,9 +123,9 @@ class Bivariate_Analysis:
             return 'Your input is not categorical'
         else:
             fig,ax = plt.subplots(1,2,figsize = (15,7))
-            fig.set_facecolor(pallete)
-            ax[0].set_facecolor(pallete)
-            ax[1].set_facecolor(pallete)
+            fig.set_facecolor(palette)
+            ax[0].set_facecolor(palette)
+            ax[1].set_facecolor(palette)
             order = self.df[self.col1].value_counts().index
             if self.df[self.col1].nunique() < 4:
                 sns.countplot(data = self.df[self.df['TARGET'] == 0], x = self.col1,dodge=True,ax = ax[0], palette='pastel',order=order)

@@ -27,7 +27,7 @@ class pre_check_tool:
         percent_missing = self.df.isnull().sum() * 100 / len(self.df)
         missing_value_df = pd.DataFrame({'number_missing' : number_missing,
                                         'percent_missing': percent_missing})
-        return missing_value_df.sort_values(by= 'percent_missing', ascending= False)
+        return missing_value_df[missing_value_df['percent_missing']>0].sort_values(by= 'percent_missing', ascending= False)
 
 
     def find_null_cols(self,threshhold):
