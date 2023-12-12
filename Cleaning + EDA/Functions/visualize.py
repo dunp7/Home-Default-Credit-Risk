@@ -115,6 +115,29 @@ class Bivariate_Analysis:
         else:
             return 'Your input is not numeric'
         
+    def plotboxplot(self):
+        if self.num == True:
+            fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 7))
+            fig.set_facecolor(self.palette)
+            ax1.set_facecolor(self.palette)
+            ax2.set_facecolor(self.palette)
+
+            sns.boxplot(data=self.df, x='TARGET', y=self.col1, ax=ax1)
+            ax1.spines[['left', 'right', 'top']].set_visible(False)
+            ax1.spines['bottom'].set_color('grey')
+            ax1.tick_params(left=False, bottom=False)
+            ax1.set_yticklabels([])
+            ax1.set_ylabel(self.col1, size=15, weight='bold')
+            ax1.set_title('NON_DEFAULT')
+
+            sns.boxplot(data=self.df, x='TARGET', y=self.col1, ax=ax2)
+            ax2.spines[['left', 'right', 'top']].set_visible(False)
+            ax2.spines['bottom'].set_color('grey')
+            ax2.tick_params(left=False, bottom=False)
+            ax2.set_yticklabels([])
+            ax2.set_ylabel('')
+            ax2.set_title('DEFAULT')
+        
         
     # CATEGORICAL COLUMNS
     def countplot(self):
