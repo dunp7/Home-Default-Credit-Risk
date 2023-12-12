@@ -119,7 +119,7 @@ class Bivariate_Analysis:
             ax1.set_facecolor(palette)
             ax2.set_facecolor(palette)
 
-            sns.boxplot(data=self.df, x='TARGET', y=self.col1, ax=ax1)
+            sns.boxplot(data=self.df[self.df[self.col2] == 0], x='TARGET', y=self.col1, ax=ax1)
             ax1.spines[['left', 'bottom', 'top']].set_visible(False)
             ax1.spines['right'].set_color('grey')
             ax1.tick_params(left=False, bottom=False)
@@ -127,7 +127,7 @@ class Bivariate_Analysis:
             ax1.set_ylabel(self.col1, size=15, weight='bold')
             ax1.set_title('NON_DEFAULT')
 
-            sns.boxplot(data=self.df, x='TARGET', y=self.col1, ax=ax2)
+            sns.boxplot(data=self.df[self.df[self.col2] == 1], x='TARGET', y=self.col1, ax=ax2)
             ax2.spines[['left', 'bottom', 'top']].set_visible(False)
             ax2.spines['right'].set_color('grey')
             ax2.tick_params(left=False, bottom=False)

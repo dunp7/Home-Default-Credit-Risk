@@ -63,21 +63,33 @@ class pre_check_tool:
             plt.title(f'Histogram for {column}')
             plt.show()
 
-    def dist_catchart(self):
-        '''Drawl all the pie chart of the categorical columns'''
+    def dist_catchart(self, col_subplots = 3):
+        '''Drawl all the pie chart of the categorical columns
+        col_subplots : the numver of cols of figure when visualizing : default = 3'''
         if not self.catdf.empty: 
             col= self.catdf.columns
-            a = 1
-            if len(col) >= 4: 
-                a = round(len(col)/4)
-            fig, ax = plt.subplots(a,4,figsize=(20,10))
+            rows_subplots = (len(col) // col_subplots) + (len(col) % col_subplots)
+            fig, ax = plt.subplots(rows_subplots,col_subplots,figsize=(20,10))
+            pastel_colors = ['#FFD1DC', '#FFB6C1', '#FF69B4', '#FFC0CB', '#FF1493']
             ite = 0 
-            for i in range(0,round(len(col)/4)):
-                for j in range(0,4): 
-                    sizes = self.catdf[col[ite]].value_counts(normalize=True)
-                    ax[i][j].pie(sizes, autopct='%1.1f%%')
-                    ax[i][j].set_title(col[ite], color = 'red')
-                    ite +=1
+            for i in range(0,rows_subplots):
+                for j in range(0,col_subplots):
+                    if ite >= len(col):
+                        x_values = pd.Series(range(-10, 11))
+                        df1 = pd.DataFrame({'x': x_values, 'y': x_values})
+                        df2 = pd.DataFrame({'x': x_values, 'y': (x_values * -1)})
+                        ax[i][j].plot(df1)
+                        ax[i][j].plot(df2)
+                        ax[i][j].spines[['left','bottom','right','top']].set_visible(False)
+                        ax[i][j].tick_params(left = False, bottom = False)
+                        ax[i][j].set_xticklabels([])
+                        ax[i][j].set_yticklabels([])
+
+                    else:
+                        sizes = self.catdf[col[ite]].value_counts(normalize=True)
+                        ax[i][j].pie(sizes, autopct='%1.1f%%', colors = pastel_colors)
+                        ax[i][j].set_title(col[ite], color = 'red')
+                        ite +=1
             # Show the figure
             plt.show()
         else:
