@@ -1,8 +1,8 @@
 # DATA-PREPARATION---FINAL-PROJECT
-This is a final project of Data visualization
+This is a final project of Data visualization in NEU 
 
 Link dataset: https://www.kaggle.com/competitions/dseb-63-data-preparation-final-project/data
-
+Link GGDrive: https://drive.google.com/drive/folders/1cUBvMPVzRKDgG5KLjEWP_zCeF-Fr30FM?usp=sharing
 
 Contribution: 
 
@@ -21,13 +21,13 @@ Hoàng Anh Quân:
 
 - PROJECT FOLDER STRUCTURE
 
-```print(‘hello world’)``` : Folder includes exploratory analysis of all tables
-preprocessing: Folder includes all feature engineering and data cleanning for all the tables
-modeling: Folders includes code of feature selection and and modeling.
+## Cleaning + EDA : Folder includes exploratory analysis of all tables
+## Features Engineer and Selection : Folder includes all feature engineering and data cleanning for all the tables
+## ML Model: Folders includes code of feature selection and and modeling.
 HOW TO USE THIS REPO
 
 Clone this repo to your local, change all the path in the repo to your path.
-Run pip install -r requirements.txt in your terminal to install all the neccessary packages.
+Run  ```pip install -r requirements.txt``` in your terminal to install all the neccessary packages.
 Read the EDA folder to understand the data
-Run script main.py in the preprocessing folder and save the final data.
-Run script fit_model.py in the modeling folder to create the final predictions.
+Run all scripts  in ```Features Engineer and Selection``` and save the final data.
+Run script ```train_pred_model.ipynb``` in the ```ML Model``` folder to create the final predictions.
