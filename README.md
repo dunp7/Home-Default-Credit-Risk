@@ -21,7 +21,7 @@ Hoàng Anh Quân:
 
 - PROJECT FOLDER STRUCTURE
 
-EDA: Folder includes exploratory analysis of all tables
+```print(‘hello world’)``: Folder includes exploratory analysis of all tables
 preprocessing: Folder includes all feature engineering and data cleanning for all the tables
 modeling: Folders includes code of feature selection and and modeling.
 HOW TO USE THIS REPO
