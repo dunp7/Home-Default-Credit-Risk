@@ -1,8 +1,8 @@
 # DATA-PREPARATION---FINAL-PROJECT
 This is a final project of Data visualization in NEU 
 
-Link dataset: https://www.kaggle.com/competitions/dseb-63-data-preparation-final-project/data
-Link GGDrive: https://drive.google.com/drive/folders/1cUBvMPVzRKDgG5KLjEWP_zCeF-Fr30FM?usp=sharing
+- Link dataset: https://www.kaggle.com/competitions/dseb-63-data-preparation-final-project/data
+- Link GGDrive: https://drive.google.com/drive/folders/1cUBvMPVzRKDgG5KLjEWP_zCeF-Fr30FM?usp=sharing
 
 Contribution: 
 
