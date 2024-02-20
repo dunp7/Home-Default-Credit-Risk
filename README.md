@@ -4,7 +4,7 @@ This is a final project of Data visualization in NEU
 - Link dataset: https://www.kaggle.com/competitions/dseb-63-data-preparation-final-project/data
 - Link GGDrive: https://drive.google.com/drive/folders/1cUBvMPVzRKDgG5KLjEWP_zCeF-Fr30FM?usp=sharing
 
-##Contribution: 
+## Contribution: 
 
 Phạm Tiến Dũng ( Leader ): 
  * Application_train, Previous_application, Pos_Cash Balance ( EDA + Features Engineering)
